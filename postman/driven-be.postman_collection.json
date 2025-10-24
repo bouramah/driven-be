@@ -1,0 +1,3068 @@
+{
+    "info": {
+        "_postman_id": "1234567890abcdef",
+        "name": "Driven Backend API",
+        "description": "Collection pour tester l'API du backend Driven",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Applications",
+            "item": [
+                {
+                    "name": "Get All Applications",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/applications",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "applications"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Application by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/applications/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "applications",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Application",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "nom",
+                                    "value": "Application Test",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "Description de l'application test",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "app_color",
+                                    "value": "#FF5733",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "creer_par",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "modifier_par",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "app_icon",
+                                    "type": "file",
+                                    "src": "/path/to/icon.png"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/applications",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "applications"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Application",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "nom",
+                                    "value": "Application Test Modifiée",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "Description modifiée de l'application test",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "app_color",
+                                    "value": "#33FF57",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "modifier_par",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "app_icon",
+                                    "type": "file",
+                                    "src": "/path/to/new_icon.png"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/applications/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "applications",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Application",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/applications/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "applications",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Pages",
+            "item": [
+                {
+                    "name": "Get All Pages",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Page by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Page",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "nom",
+                                    "value": "Page Test",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "Description de la page test",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "lien",
+                                    "value": "/test-page",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "app_id",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "creer_par",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "modifier_par",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "icon",
+                                    "type": "file",
+                                    "src": "/path/to/page_icon.png"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Page",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "nom",
+                                    "value": "Page Test Modifiée",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "Description modifiée de la page test",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "lien",
+                                    "value": "/test-page-modified",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "app_id",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "modifier_par",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "icon",
+                                    "type": "file",
+                                    "src": "/path/to/new_page_icon.png"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Page",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Pages by Application",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages/application/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages",
+                                "application",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Add Pages to Application",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"page_ids\": [1, 2, 3]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages/application/1/add",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages",
+                                "application",
+                                "1",
+                                "add"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove Pages from Application",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"page_ids\": [1, 2, 3]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/pages/application/1/remove",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "pages",
+                                "application",
+                                "1",
+                                "remove"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Blacklist",
+            "item": [
+                {
+                    "name": "Get All Blacklist Entries",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Blacklist Entries (Page 2)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist?page=2&per_page=15",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "2",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Blacklist Entry by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Blacklist Entry by Number",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist/number/123456789",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist",
+                                "number",
+                                "123456789"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Check if Number is Blacklisted",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist/check/123456789",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist",
+                                "check",
+                                "123456789"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Blacklist Entry",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"numero\": \"123456789\",\n    \"nom\": \"Nom du contact\",\n    \"structure\": \"Structure du contact\",\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Blacklist Entry",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"numero\": \"987654321\",\n    \"nom\": \"Nouveau nom\",\n    \"structure\": \"Nouvelle structure\",\n    \"modifier_par\": 1\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Blacklist Entry",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/blacklist/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "blacklist",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Traces",
+            "item": [
+                {
+                    "name": "Get All Trace Entries",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Trace Entries (Page 2)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces?page=2&per_page=15",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "2",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Trace Entry by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Trace Entry",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"action\": \"CREATE_USER\",\n    \"detail\": \"Création d'un nouvel utilisateur\",\n    \"code\": \"USER_001\",\n    \"param\": \"username=johndoe\",\n    \"code_sql\": \"INSERT INTO utilisateur...\",\n    \"end_point\": \"/utilisateurs\",\n    \"id_utilisateur\": 1\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Trace Entry",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"action\": \"UPDATE_USER\",\n    \"detail\": \"Mise à jour d'un utilisateur\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Trace Entry",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Traces by User",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces/utilisateur/1?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces",
+                                "utilisateur",
+                                "1"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Traces by Action",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces/action/LOGIN?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces",
+                                "action",
+                                "LOGIN"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Traces by Date Range",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/traces/date-range?start_date=2024-01-01&end_date=2024-12-31&page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "traces",
+                                "date-range"
+                            ],
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "2024-01-01",
+                                    "description": "Date de début au format ISO (YYYY-MM-DD)"
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "2024-12-31",
+                                    "description": "Date de fin au format ISO (YYYY-MM-DD)"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Entités",
+            "item": [
+                {
+                    "name": "Get All Entities",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/entites?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "entites"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Entities (Page 2)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/entites?page=2&per_page=15",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "entites"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "2",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Entity by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/entites/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "entites",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Entity by Code",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/entites/code/ABC",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "entites",
+                                "code",
+                                "ABC"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Entity",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Entité Test\",\n    \"code\": \"TEST\",\n    \"email\": \"test@example.com\",\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/entites",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "entites"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Entity",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Entité Test Modifiée\",\n    \"code\": \"TESTM\",\n    \"email\": \"test-modifie@example.com\",\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/entites/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "entites",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Entity",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/entites/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "entites",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Objectifs",
+            "item": [
+                {
+                    "name": "Get All Objectifs",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Objectif by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Objectifs by Utilisateur",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs/utilisateur/1?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs",
+                                "utilisateur",
+                                "1"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Objectifs by Type",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs/type/chiffre_affaires?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs",
+                                "type",
+                                "chiffre_affaires"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Objectifs by Periode",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs/periode/2024.01?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs",
+                                "periode",
+                                "2024.01"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Recherche par période simple (ex: 2024.01) ou plage (ex: 2024.01-2024.03)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Objectif",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"titre\": \"Objectif CA Q1\",\n  \"id_utilisateur\": 1,\n  \"type\": \"chiffre_affaires\",\n  \"description\": \"Atteindre 100K€ de CA\",\n  \"periode\": \"2024.01-2024.03\",\n  \"date_debut\": \"2024-01-01T00:00:00\",\n  \"date_fin\": \"2024-03-31T00:00:00\",\n  \"statut\": \"En cours\",\n  \"progression\": 0.0,\n  \"valeur\": 100000,\n  \"creer_par\": 1,\n  \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Objectif",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"description\": \"Atteindre 120K€ de CA\",\n  \"periode\": \"2024.01-2024.06\",\n  \"valeur\": 120000,\n  \"progression\": 0.25,\n  \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Objectif",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/objectifs/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "objectifs",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Codifications",
+            "item": [
+                {
+                    "name": "Get All Codifications",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/codifications?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "codifications"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Codification by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/codifications/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "codifications",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Codification by Param",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/codifications/param/TYPE_DEMANDE",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "codifications",
+                                "param",
+                                "TYPE_DEMANDE"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Search Codifications",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/codifications/search?q=demande&page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "codifications",
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "demande"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Codification",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"libelle\": \"Type de demande\",\n    \"param\": \"TYPE_DEMANDE\",\n    \"description\": \"Types de demandes possibles\",\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/codifications",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "codifications"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Codification",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"libelle\": \"Type de demande modifié\",\n    \"description\": \"Description mise à jour\",\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/codifications/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "codifications",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Codification",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/codifications/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "codifications",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Settings",
+            "item": [
+                {
+                    "name": "Get All Settings",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/settings?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "settings"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Setting by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/settings/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "settings",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Settings by User",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/settings/utilisateur/1?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "settings",
+                                "utilisateur",
+                                "1"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Setting",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"id_utilisateur\": 1,\n    \"id_codification\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/settings",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "settings"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Setting",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"id_codification\": 2\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/settings/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "settings",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Setting",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/settings/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "settings",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Permissions",
+            "description": "Endpoints pour la gestion des permissions",
+            "item": [
+                {
+                    "name": "Liste des permissions",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/permissions/",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "permissions",
+                                ""
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtenir une permission",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/permissions/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "permissions",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Créer une permission",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Lire les utilisateurs\",\n    \"description\": \"Permission pour lire les données des utilisateurs\",\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/permissions/",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "permissions",
+                                ""
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Mettre à jour une permission",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Lire les utilisateurs (modifié)\",\n    \"description\": \"Permission modifiée pour lire les données des utilisateurs\",\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/permissions/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "permissions",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Supprimer une permission",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/permissions/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "permissions",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtenir les rôles avec une permission",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/permissions/1/roles",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "permissions",
+                                "1",
+                                "roles"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtenir les rôles avec une permission spécifique",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/permissions/1/roles",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "permissions",
+                                "1",
+                                "roles"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Roles",
+            "item": [
+                {
+                    "name": "Get All Roles",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Roles by Application",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles/application/1?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles",
+                                "application",
+                                "1"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Role by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Role",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Admin\",\n    \"description\": \"Administrateur\",\n    \"app_id\": 1,\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Role",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Super Admin\",\n    \"description\": \"Super Administrateur\",\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Role",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Role Permissions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles/1/permissions",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles",
+                                "1",
+                                "permissions"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Assign Permissions",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"permission_ids\": [1, 2, 3]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles/1/permissions",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles",
+                                "1",
+                                "permissions"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Permissions",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"permission_ids\": [1, 2]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/roles/1/permissions",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "roles",
+                                "1",
+                                "permissions"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Utilisateurs",
+            "item": [
+                {
+                    "name": "Lister tous les utilisateurs",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Lister les utilisateurs par entité",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/entite/1?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "entite",
+                                "1"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Lister les utilisateurs par rôle",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/role/1?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "role",
+                                "1"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtenir un utilisateur spécifique",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Rechercher des utilisateurs",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/search?q=dupont&page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "dupont"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtenir un utilisateur par login",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/login/jdupont",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "login",
+                                "jdupont"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtenir un utilisateur par email",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/email/jean.dupont@example.com",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "email",
+                                "jean.dupont@example.com"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Créer un nouvel utilisateur",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Dupont\",\n    \"prenom\": \"Jean\",\n    \"login\": \"jdupont\",\n    \"email\": \"jean.dupont@example.com\",\n    \"statut\": \"Actif\",\n    \"date_expiration\": \"2025-01-01T00:00:00\",\n    \"profil\": \"Administrateur\",\n    \"id_entite\": 1,\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Mettre à jour un utilisateur",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Dupont-Martin\",\n    \"email\": \"jean.dupont-martin@example.com\",\n    \"modifier_par\": 1\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Supprimer un utilisateur",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Prolonger la date d'expiration d'un utilisateur",
+                    "request": {
+                      "method": "PUT",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Authorization",
+                          "value": "Bearer {{token}}",
+                          "type": "text"
+                        }
+                      ],
+                      "body": {
+                        "mode": "raw",
+                        "raw": "{\n  \"date_expiration\": \"2025-12-31T00:00:00\"\n}"
+                      },
+                      "url": {
+                        "raw": "{{BASE_URL}}/utilisateurs/1/prolonger",
+                        "host": ["{{BASE_URL}}"],
+                        "path": ["utilisateurs", "1", "prolonger"]
+                      },
+                      "description": "Prolonge la date d'expiration d'un utilisateur en spécifiant directement la nouvelle date"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Mettre à jour le profil",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1/profil",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1",
+                                "profil"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Dupont\",\n    \"prenom\": \"Jean-Pierre\",\n    \"email\": \"jean-pierre.dupont@example.com\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Mettre à jour le statut",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1/statut",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1",
+                                "statut"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"statut\": \"Inactif\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Vérifier l'éligibilité",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1/eligibilite?app_id=1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1",
+                                "eligibilite"
+                            ],
+                            "query": [
+                                {
+                                    "key": "app_id",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtenir les rôles d'un utilisateur",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1/roles",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1",
+                                "roles"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Assigner un rôle à un utilisateur",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1/roles",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1",
+                                "roles"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"role_id\": 2,\n    \"app_id\": 1,\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Retirer un rôle d'un utilisateur",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{BASE_URL}}/utilisateurs/1/roles/2/application/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "utilisateurs",
+                                "1",
+                                "roles",
+                                "2",
+                                "application",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Authentification",
+                    "item": [
+                      {
+                        "name": "Login",
+                        "request": {
+                          "method": "POST",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"login\": \"jdupont\",\n  \"password\": \"motdepasse\"\n}"
+                          },
+                          "url": {
+                            "raw": "{{BASE_URL}}/auth/login",
+                            "host": ["{{BASE_URL}}"],
+                            "path": ["auth", "login"]
+                          },
+                          "description": "Authentification d'un utilisateur via LDAP"
+                        },
+                        "response": [
+                          {
+                            "name": "Succès",
+                            "originalRequest": {
+                              "method": "POST",
+                              "header": [],
+                              "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"login\": \"jdupont\",\n  \"password\": \"motdepasse\"\n}"
+                              },
+                              "url": {
+                                "raw": "{{BASE_URL}}/auth/login"
+                              }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "error": false,
+                              "message": {
+                                "en": "Authentication successful",
+                                "fr": "Authentification réussie"
+                              },
+                              "data": {
+                                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+                                "utilisateur": {
+                                  "id_utilisateur": 1,
+                                  "nom": "Dupont",
+                                  "prenom": "Jean",
+                                  "login": "jdupont",
+                                  "email": "jean.dupont@example.com",
+                                  "statut": "Actif",
+                                  "date_expiration": "2025-12-31T00:00:00",
+                                  "profil": "Administrateur",
+                                  "id_entite": 1,
+                                  "creer_par": 1,
+                                  "modifier_par": 1,
+                                  "creer_a": "2024-03-05T12:00:00",
+                                  "modifier_a": "2024-03-05T12:00:00",
+                                  "entite": {
+                                    "id": 1,
+                                    "nom": "Siège",
+                                    "code": "SIEGE",
+                                    "email": "siege@example.com",
+                                    "creer_par": 1,
+                                    "modifier_par": 1,
+                                    "creer_a": "2024-03-05T12:00:00",
+                                    "modifier_a": "2024-03-05T12:00:00"
+                                  },
+                                  "utilisateur_roles": []
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Fonctions API",
+            "item": [
+                {
+                    "name": "Get All Functions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        },
+                        "description": "Récupère toutes les fonctions API avec pagination"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Functions by Application",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/application/1?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "application",
+                                "1"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        },
+                        "description": "Récupère les fonctions API pour une application spécifique"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Function by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "1"
+                            ]
+                        },
+                        "description": "Récupère une fonction API par son ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Function",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom_fonction\": \"get_users\",\n    \"description\": \"Récupérer la liste des utilisateurs\",\n    \"app_id\": 1,\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api"
+                            ]
+                        },
+                        "description": "Crée une nouvelle fonction API"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Function",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom_fonction\": \"get_all_users\",\n    \"description\": \"Récupérer tous les utilisateurs du système\",\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "1"
+                            ]
+                        },
+                        "description": "Met à jour une fonction API existante"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Function",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "1"
+                            ]
+                        },
+                        "description": "Supprime une fonction API"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Function Permissions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/1/permissions",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "1",
+                                "permissions"
+                            ]
+                        },
+                        "description": "Récupère les permissions associées à une fonction API"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Assign Permissions to Function",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"permission_ids\": [1, 2, 3]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/1/permissions",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "1",
+                                "permissions"
+                            ]
+                        },
+                        "description": "Assigne plusieurs permissions à une fonction API"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove Permissions from Function",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"permission_ids\": [1, 2]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/1/permissions",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "1",
+                                "permissions"
+                            ]
+                        },
+                        "description": "Retire des permissions d'une fonction API"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Assign Single Permission to Function",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/fonctions_api/1/permissions/2",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "fonctions_api",
+                                "1",
+                                "permissions",
+                                "2"
+                            ]
+                        },
+                        "description": "Assigne une permission spécifique à une fonction API"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Demandes",
+            "item": [
+                {
+                    "name": "Get All Demandes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/demandes?page=1&per_page=10",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "demandes"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numéro de la page"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Nombre d'éléments par page (max: 50)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Demande by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/demandes/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "demandes",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Demande",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Demande Test\",\n    \"description\": \"Description de la demande test\",\n    \"app_id\": 1,\n    \"creer_par\": 1,\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/demandes",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "demandes"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Demande",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nom\": \"Demande Test Modifiée\",\n    \"description\": \"Description modifiée de la demande test\",\n    \"app_id\": 1,\n    \"modifier_par\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/demandes/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "demandes",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Demande",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{TOKEN}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/demandes/1",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "demandes",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}

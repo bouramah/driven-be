@@ -1,0 +1,10 @@
+[
+  {
+    "type": "sqlite",
+    "path": "/Users/ibrahimadoutyoulare/Documents/Code Orange/Driven/driven-be/app.db"
+  },
+  {
+    "type": "sqlite",
+    "path": "/Users/ibrahimadoutyoulare/Documents/Code Orange/Driven/driven-be/instance/app.db"
+  }
+]

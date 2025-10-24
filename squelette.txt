@@ -1,0 +1,59 @@
+driven-backend/
+├── app/
+│   ├── __init__.py
+│   ├── config.py         # Configuration (BD MariaDB, API, etc.)
+│   ├── common/           # Fonctionnalités et éléments partagés
+│   │   ├── __init__.py
+│   │   ├── models.py     # Modèles centraux (Utilisateur, Role, Settings, Permission, etc.)
+│   │   ├── schemas.py    # Schémas centraux pour sérialisation (Marshmallow)
+│   │   ├── auth.py       # Blueprint pour l’authentification
+│   │   ├── roles.py      # Blueprint pour les rôles
+│   │   ├── settings.py   # Blueprint pour les settings
+│   │   ├── permissions.py # Blueprint pour les permissions
+│   │   ├── traces.py     # Blueprint pour les traces/logs
+│   │   ├── controllers/  # Controllers partagés (par exemple, AuthController, RoleController)
+│   │   │   ├── __init__.py
+│   │   │   ├── auth_controller.py
+│   │   │   └── role_controller.py
+│   │   └── services/     # Services partagés (logique métier centrale)
+│   │       ├── __init__.py
+│   │       ├── user_service.py    # Gestion des utilisateurs
+│   │       ├── role_service.py    # Gestion des rôles
+│   │       ├── permission_service.py # Gestion des permissions
+│   │       └── trace_service.py   # Gestion des traces
+│   ├── apps/             # Applications spécifiques
+│   │   ├── __init__.py
+│   │   ├── gestion_demande/ # Application de gestion de demandes
+│   │   │   ├── __init__.py
+│   │   │   ├── routes.py    # Blueprints (routes) spécifiques à gestion-demande
+│   │   │   ├── models.py    # Modèles spécifiques (si nécessaires, par exemple Demande, Traiter)
+│   │   │   ├── controllers/ # Controllers spécifiques à gestion-demande
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── demande_controller.py
+│   │   │   └── services/    # Services spécifiques à gestion-demande
+│   │   │       ├── __init__.py
+│   │   │       └── demande_service.py
+│   │   ├── kpi_dde/       # Application de suivi de KPI (kpi-dde)
+│   │   │   ├── __init__.py
+│   │   │   ├── routes.py    # Blueprints (routes) spécifiques à kpi-dde
+│   │   │   ├── models.py    # Modèles spécifiques (si nécessaires)
+│   │   │   ├── controllers/ # Controllers spécifiques à kpi-dde
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── kpi_controller.py
+│   │   │   └── services/    # Services spécifiques à kpi-dde
+│   │   │       ├── __init__.py
+│   │   │       └── kpi_service.py
+│   │   └── consultation/  # Application de consultation
+│   │       ├── __init__.py
+│   │       ├── routes.py    # Blueprints (routes) spécifiques à consultation
+│   │       ├── models.py    # Modèles spécifiques (si nécessaires)
+│   │       ├── controllers/ # Controllers spécifiques à consultation
+│   │       │   ├── __init__.py
+│   │       │   └── consultation_controller.py
+│   │       └── services/    # Services spécifiques à consultation
+│   │           ├── __init__.py
+│   │           └── consultation_service.py
+│   └── migrations/       # Répertoire pour Alembic (migrations de la base de données, centralisé)
+├── requirements.txt      # Liste des dépendances Python (Flask, SQLAlchemy, etc.)
+├── .gitignore            # Exclure les fichiers sensibles (par exemple, fichiers de configuration locaux)
+└── run.py                # Point d’entrée pour lancer l’application Flask

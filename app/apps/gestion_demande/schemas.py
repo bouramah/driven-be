@@ -1,0 +1,33 @@
+from marshmallow import Schema, fields
+
+class TypeDemandeSchema(Schema):
+    id_type = fields.Int(dump_only=True)
+    nom_type = fields.Str(required=True)
+    description = fields.Str(required=True)
+    delai_en_jour = fields.Int(required=True)
+    creer_par = fields.Int(required=True)
+    modifier_par = fields.Int(required=True)
+    creer_a = fields.DateTime(dump_only=True)
+    modifier_a = fields.DateTime(dump_only=True)
+
+class DemandeSchema(Schema):
+    id_demande = fields.Int(dump_only=True)
+    numero_demande = fields.Str(required=True)
+    nom = fields.Str(required=True)
+    description = fields.Str(required=True)
+    contenu_sql = fields.Str(required=True)
+    chemin_fichier = fields.Str(required=True)
+    statut = fields.Str(required=True)
+    niveau_priorite = fields.Str(required=True)
+    date_initiation = fields.DateTime(required=True)
+    date_prise_en_charge = fields.DateTime(required=True)
+    date_fin = fields.DateTime(required=True)
+    scan_demande = fields.Str(required=True)
+    creer_par = fields.Int(required=True)
+    modifier_par = fields.Int(required=True)
+    creer_a = fields.DateTime(dump_only=True)
+    modifier_a = fields.DateTime(dump_only=True)
+    id_utilisateur = fields.Int(required=True)
+    id_type = fields.Int(required=True)
+    id_utilisateur_traiter = fields.Int(allow_none=True)
+    id_entite = fields.Int(required=True) 
