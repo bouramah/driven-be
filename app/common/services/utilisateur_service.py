@@ -1,4 +1,4 @@
-from app.common.models import Utilisateur, UtilisateurRole, Role, Application, Entite, db
+from app.common.models import Utilisateur, UtilisateurRole, Role, Application, Entite, Settings, Objectif, db
 from sqlalchemy import and_, or_
 from datetime import datetime, timedelta
 from sqlalchemy.orm import joinedload
@@ -145,6 +145,12 @@ class UtilisateurService:
             
             # Supprimer toutes les associations de rôles
             UtilisateurRole.query.filter_by(id_utilisateur=utilisateur_id).delete()
+            
+            # Supprimer les settings de l'utilisateur
+            Settings.query.filter_by(id_utilisateur=utilisateur_id).delete()
+            
+            # Supprimer les objectifs de l'utilisateur
+            Objectif.query.filter_by(id_utilisateur=utilisateur_id).delete()
             
             # Supprimer l'utilisateur
             db.session.delete(utilisateur)

@@ -121,12 +121,19 @@ def create_entite():
         }
         return jsonify(result), 201
     except ValueError as e:
+        error_msg = str(e)
+        if '|' in error_msg and ':' in error_msg:
+            parts = error_msg.split('|')
+            message = {
+                "fr": parts[0].split(':', 1)[1] if 'fr:' in parts[0] else error_msg,
+                "en": parts[1].split(':', 1)[1] if 'en:' in parts[1] else error_msg
+            }
+        else:
+            message = {"fr": error_msg, "en": error_msg}
+        
         result = {
             "error": True,
-            "message": {
-                "en": str(e),
-                "fr": str(e)
-            }
+            "message": message
         }
         return jsonify(result), 400
     except Exception as e:
@@ -170,12 +177,20 @@ def update_entite(id):
         }
         return jsonify(result)
     except ValueError as e:
+        error_msg = str(e)
+        # Parser le format bilingue "fr:message|en:message"
+        if '|' in error_msg and ':' in error_msg:
+            parts = error_msg.split('|')
+            message = {
+                "fr": parts[0].split(':', 1)[1] if 'fr:' in parts[0] else error_msg,
+                "en": parts[1].split(':', 1)[1] if 'en:' in parts[1] else error_msg
+            }
+        else:
+            message = {"fr": error_msg, "en": error_msg}
+        
         result = {
             "error": True,
-            "message": {
-                "en": str(e),
-                "fr": str(e)
-            }
+            "message": message
         }
         return jsonify(result), 400
     except Exception as e:

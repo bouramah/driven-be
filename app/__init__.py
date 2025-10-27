@@ -32,20 +32,24 @@ class Application:
     def init_extensions(self):
         """Initialise les extensions Flask avec l'application"""
         db.init_app(self.app)
-        migrate.init_app(self.app, db)
-        self.configure_jwt()
-        ma.init_app(self.app)
         
         # Créer les tables dans un contexte d'application
         with self.app.app_context():
             db.create_all()
         
+        # Initialiser les autres extensions après la création des tables
+        migrate.init_app(self.app, db)
+        self.configure_jwt()
+        ma.init_app(self.app)
+        
         # Configuration CORS
+        cors_origins = self.app.config['CORS_ORIGINS'] if self.app.config['CORS_ORIGINS'] else "*"
         CORS(self.app, resources={
             r"/api/*": {
-                "origins": self.app.config['CORS_ORIGINS'],
+                "origins": cors_origins,
                 "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-                "allow_headers": ["Content-Type", "Authorization"]
+                "allow_headers": ["Content-Type", "Authorization"],
+                "supports_credentials": True
             }
         })
     

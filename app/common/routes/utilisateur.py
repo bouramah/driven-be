@@ -223,6 +223,14 @@ def update_utilisateur(id):
             },
             'data': utilisateur_schema.dump(utilisateur)
         })
+    except ValueError as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': str(e),
+                'fr': str(e)
+            }
+        }), 400
     except Exception as e:
         return jsonify({
             'error': True,
