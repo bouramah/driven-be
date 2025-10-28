@@ -1,17 +1,18 @@
-from app.common.models import Trace, db
-from datetime import datetime
+from app.common.models import Trace, Utilisateur, db
+from datetime import datetime, timedelta
 import json
 from flask import request
+from sqlalchemy.orm import joinedload
 
 class TraceService:
     def get_all_traces(self):
-        return Trace.query.all()
+        return Trace.query.options(joinedload(Trace.utilisateur)).all()
     
     def get_traces_paginated(self, page, per_page):
-        return Trace.query.order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        return Trace.query.options(joinedload(Trace.utilisateur)).order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
     
     def get_trace_by_id(self, trace_id):
-        return Trace.query.get(trace_id)
+        return Trace.query.options(joinedload(Trace.utilisateur)).get(trace_id)
     
     def create_trace(self, trace_data):
         trace = Trace(**trace_data)
@@ -42,27 +43,27 @@ class TraceService:
         return False
     
     def get_traces_by_utilisateur(self, utilisateur_id):
-        return Trace.query.filter_by(id_utilisateur=utilisateur_id).order_by(Trace.date.desc()).all()
+        return Trace.query.options(joinedload(Trace.utilisateur)).filter_by(id_utilisateur=utilisateur_id).order_by(Trace.date.desc()).all()
     
     def get_traces_by_action(self, action):
-        return Trace.query.filter_by(action=action).order_by(Trace.date.desc()).all()
+        return Trace.query.options(joinedload(Trace.utilisateur)).filter_by(action=action).order_by(Trace.date.desc()).all()
     
     def get_traces_by_date_range(self, start_date, end_date):
-        return Trace.query.filter(
+        return Trace.query.options(joinedload(Trace.utilisateur)).filter(
             Trace.date >= start_date,
-            Trace.date <= end_date
+            Trace.date < end_date + timedelta(days=1)
         ).order_by(Trace.date.desc()).all()
     
     def get_traces_by_utilisateur_paginated(self, utilisateur_id, page, per_page):
-        return Trace.query.filter_by(id_utilisateur=utilisateur_id).order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        return Trace.query.options(joinedload(Trace.utilisateur)).filter_by(id_utilisateur=utilisateur_id).order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
     
     def get_traces_by_action_paginated(self, action, page, per_page):
-        return Trace.query.filter_by(action=action).order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        return Trace.query.options(joinedload(Trace.utilisateur)).filter_by(action=action).order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
     
     def get_traces_by_date_range_paginated(self, start_date, end_date, page, per_page):
-        return Trace.query.filter(
+        return Trace.query.options(joinedload(Trace.utilisateur)).filter(
             Trace.date >= start_date,
-            Trace.date <= end_date
+            Trace.date < end_date + timedelta(days=1)
         ).order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
 
     @staticmethod

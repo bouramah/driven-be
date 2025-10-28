@@ -246,6 +246,9 @@ class Trace(db.Model):
     code_sql = db.Column(db.Text, nullable=True)
     end_point = db.Column(db.String(400), nullable=True)
     id_utilisateur = db.Column(db.Integer, db.ForeignKey('utilisateur.id_utilisateur'), nullable=True)
+    
+    # Relations
+    utilisateur = db.relationship('Utilisateur', backref='traces', lazy=True)
 
 class BlackList(db.Model):
     __tablename__ = 'black_list'
