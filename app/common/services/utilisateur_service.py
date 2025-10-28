@@ -73,7 +73,11 @@ class UtilisateurService:
                 if not utilisateur_data['date_expiration'] or utilisateur_data['date_expiration'] == '':
                     utilisateur_data['date_expiration'] = None
                 elif isinstance(utilisateur_data['date_expiration'], str):
-                    utilisateur_data['date_expiration'] = datetime.fromisoformat(utilisateur_data['date_expiration'].replace('T', ' '))
+                    # Gérer différents formats de dates ISO
+                    date_str = utilisateur_data['date_expiration']
+                    if 'T' in date_str:
+                        date_str = date_str.replace('Z', '+00:00')
+                    utilisateur_data['date_expiration'] = datetime.fromisoformat(date_str)
             
             
             # Créer l'utilisateur
@@ -123,6 +127,13 @@ class UtilisateurService:
                         raise ValueError(f"Un utilisateur avec le login '{utilisateur_data['login']}' existe déjà")
                     else:
                         raise ValueError(f"Un utilisateur avec l'email '{utilisateur_data['email']}' existe déjà")
+            
+            # Gérer la date d'expiration - convertir la chaîne en datetime si nécessaire
+            if 'date_expiration' in utilisateur_data:
+                if not utilisateur_data['date_expiration'] or utilisateur_data['date_expiration'] == '':
+                    utilisateur_data['date_expiration'] = None
+                elif isinstance(utilisateur_data['date_expiration'], str):
+                    utilisateur_data['date_expiration'] = datetime.fromisoformat(utilisateur_data['date_expiration'].replace('Z', '+00:00'))
             
             # Mettre à jour l'utilisateur
             for key, value in utilisateur_data.items():

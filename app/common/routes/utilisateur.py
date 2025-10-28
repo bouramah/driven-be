@@ -175,9 +175,7 @@ def create_utilisateur():
     """Créer un nouvel utilisateur"""
     try:
         data = request.json
-        # Convertir la chaîne de date en objet datetime
-        if 'date_expiration' in data and data['date_expiration'] is not None and data['date_expiration'] != "" and isinstance(data['date_expiration'], str):
-            data['date_expiration'] = datetime.fromisoformat(data['date_expiration'].replace('T', ' '))
+        # La conversion de date est gérée dans le service
         utilisateur = utilisateur_controller.create_utilisateur(data)
         return jsonify({
             'error': False,
