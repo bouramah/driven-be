@@ -20,9 +20,10 @@ def get_traces():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     
-    # Limiter per_page à un maximum de 50 pour éviter les requêtes trop lourdes
-    if per_page > 50:
-        per_page = 50
+    # Limiter per_page à un maximum de 1000 pour l'export, 50 pour l'affichage normal
+    max_per_page = 1000 if per_page > 100 else 50
+    if per_page > max_per_page:
+        per_page = max_per_page
     
     # Récupérer les entrées paginées
     traces_paginated = trace_controller.get_traces_paginated(page, per_page)
@@ -173,9 +174,10 @@ def get_traces_by_utilisateur(utilisateur_id):
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     
-    # Limiter per_page à un maximum de 50 pour éviter les requêtes trop lourdes
-    if per_page > 50:
-        per_page = 50
+    # Limiter per_page à un maximum de 1000 pour l'export, 50 pour l'affichage normal
+    max_per_page = 1000 if per_page > 100 else 50
+    if per_page > max_per_page:
+        per_page = max_per_page
     
     # Récupérer les entrées paginées
     traces_paginated = trace_controller.get_traces_by_utilisateur_paginated(utilisateur_id, page, per_page)
@@ -212,9 +214,10 @@ def get_traces_by_action(action):
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     
-    # Limiter per_page à un maximum de 50 pour éviter les requêtes trop lourdes
-    if per_page > 50:
-        per_page = 50
+    # Limiter per_page à un maximum de 1000 pour l'export, 50 pour l'affichage normal
+    max_per_page = 1000 if per_page > 100 else 50
+    if per_page > max_per_page:
+        per_page = max_per_page
     
     # Récupérer les entrées paginées
     traces_paginated = trace_controller.get_traces_by_action_paginated(action, page, per_page)
@@ -277,9 +280,10 @@ def get_traces_by_date_range():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     
-    # Limiter per_page à un maximum de 50 pour éviter les requêtes trop lourdes
-    if per_page > 50:
-        per_page = 50
+    # Limiter per_page à un maximum de 1000 pour l'export, 50 pour l'affichage normal
+    max_per_page = 1000 if per_page > 100 else 50
+    if per_page > max_per_page:
+        per_page = max_per_page
     
     # Récupérer les entrées paginées
     traces_paginated = trace_controller.get_traces_by_date_range_paginated(start_date, end_date, page, per_page)

@@ -129,7 +129,7 @@ class TraceSchema(Schema):
     param = fields.Str(required=False)
     code_sql = fields.Str(required=False)
     end_point = fields.Str(required=False)
-    id_utilisateur = fields.Int(required=False)
+    id_utilisateur = fields.Int(required=False, allow_none=True)
     utilisateur = fields.Nested(UtilisateurSchema, dump_only=True)
 
 class BlackListSchema(Schema):

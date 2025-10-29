@@ -224,9 +224,6 @@ def delete_codification(id):
             "message": error_messages
         }
         
-        # Log pour debug
-        print(f"DEBUG - Sending error response: {response}")
-        
         return jsonify(response), 400
     
     except Exception as e:
