@@ -393,6 +393,38 @@ class UtilisateurService:
             print(f"Error removing role: {str(e)}")
             db.session.rollback()
             raise
+
+    def clone_roles_from_user(self, target_user_id, source_user_id, app_ids=None, creer_par=None, modifier_par=None):
+        """
+        Cloner les rôles d'un utilisateur source vers un utilisateur cible.
+        Si app_ids est fourni (liste d'applications), ne cloner que les rôles de ces applications.
+        """
+        try:
+            # Vérifier existence utilisateurs
+            target = self.get_utilisateur_by_id(target_user_id)
+            source = self.get_utilisateur_by_id(source_user_id)
+            if not target or not source:
+                raise ValueError("Utilisateur source ou cible introuvable")
+
+            # Récupérer les associations de rôles du source, filtrées éventuellement par applications
+            query = UtilisateurRole.query.filter_by(id_utilisateur=source_user_id)
+            if app_ids:
+                query = query.filter(UtilisateurRole.app_id.in_(app_ids))
+            source_roles = query.all()
+
+            if not source_roles:
+                return []
+
+            # Extraire la liste de role_ids à cloner (anti-doublon)
+            role_ids = list({ur.role_id for ur in source_roles})
+
+            # Utiliser la méthode d'assignation multiple existante
+            return self.assign_multiple_roles(target_user_id, role_ids, creer_par or target_user_id, modifier_par or target_user_id)
+
+        except Exception as e:
+            print(f"Error cloning roles: {str(e)}")
+            db.session.rollback()
+            raise
     
     def get_utilisateur_roles(self, utilisateur_id):
         """Récupérer tous les rôles d'un utilisateur"""

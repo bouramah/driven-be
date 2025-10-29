@@ -72,3 +72,7 @@ class UtilisateurController:
         """Récupérer tous les rôles d'un utilisateur"""
         return self.utilisateur_service.get_utilisateur_roles(utilisateur_id)
     
+    def clone_roles(self, target_user_id, source_user_id, app_ids=None, creer_par=None, modifier_par=None):
+        """Cloner les rôles d'un utilisateur source vers un utilisateur cible"""
+        return self.utilisateur_service.clone_roles_from_user(target_user_id, source_user_id, app_ids, creer_par, modifier_par)
+    

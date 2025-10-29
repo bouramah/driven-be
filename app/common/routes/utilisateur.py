@@ -511,6 +511,57 @@ def assign_role(id):
             'details': str(e)
         }), 500
 
+@utilisateur_bp.route('/<int:id>/roles/clone', methods=['POST'])
+@jwt_required()
+@api_fonction(nom_fonction='clone_roles', app_id=1, description='Cloner les rôles d\'un utilisateur source vers un utilisateur cible', auto_register=True)
+@trace_action(action_type="UTILISATEUR", code_prefix="USER_ROLES_CLONE")
+@auto_set_user_fields()
+def clone_roles(id):
+    """Cloner les rôles d'un utilisateur source vers un utilisateur cible. Optionnellement filtrer par applications."""
+    try:
+        data = request.json
+        source_user_id = data.get('source_user_id')
+        app_ids = data.get('app_ids')  # optionnel
+        creer_par = data.get('creer_par')
+        modifier_par = data.get('modifier_par')
+
+        if not source_user_id:
+            return jsonify({
+                'error': True,
+                'message': {
+                    'en': 'source_user_id is required',
+                    'fr': 'source_user_id est requis'
+                }
+            }), 400
+
+        cloned = utilisateur_controller.clone_roles(id, source_user_id, app_ids, creer_par, modifier_par)
+
+        return jsonify({
+            'error': False,
+            'message': {
+                'en': f'{len(cloned)} role(s) cloned successfully',
+                'fr': f'{len(cloned)} rôle(s) cloné(s) avec succès'
+            },
+            'data': utilisateur_roles_schema.dump(cloned)
+        })
+    except ValueError as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': str(e),
+                'fr': str(e)
+            }
+        }), 400
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': 'Error while cloning roles',
+                'fr': 'Erreur lors du clonage des rôles'
+            },
+            'details': str(e)
+        }), 500
+
 @utilisateur_bp.route('/<int:id>/roles/<int:role_id>/application/<int:app_id>', methods=['DELETE'])
 @jwt_required()
 @api_fonction(nom_fonction='remove_role', app_id=1, description='Supprimer un rôle d\'un utilisateur pour une application spécifique', auto_register=True)
