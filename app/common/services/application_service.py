@@ -15,6 +15,28 @@ class ApplicationService:
     def get_application_by_id(self, app_id):
         return Application.query.get(app_id)
     
+    def get_applications_for_user(self, user: Utilisateur):
+        """Retourner les applications accessibles à l'utilisateur.
+        - Si le profil de l'utilisateur est 'Administrateur', retourner toutes les applications
+        - Sinon, retourner uniquement les applications pour lesquelles il a au moins un rôle
+        """
+        if not user:
+            return []
+
+        # Accès complet pour les administrateurs
+        if getattr(user, 'profile', None) == 'Administrateur' or getattr(user, 'profil', None) == 'Administrateur':
+            return Application.query.all()
+
+        # Récupérer les app_id distincts où l'utilisateur possède au moins un rôle
+        app_ids = db.session.query(UtilisateurRole.app_id).filter_by(id_utilisateur=user.id_utilisateur).distinct().all()
+        app_ids = [row[0] for row in app_ids]
+
+        if not app_ids:
+            return []
+
+        # Retourner les applications correspondantes
+        return Application.query.filter(Application.app_id.in_(app_ids)).all()
+    
     def get_utilisateurs_by_application_paginated(self, app_id, page, per_page):
         """Récupérer tous les utilisateurs d'une application avec pagination"""
         # Récupérer les IDs des utilisateurs ayant un rôle pour cette application
