@@ -19,8 +19,8 @@ class SettingsController:
     def get_settings_by_utilisateur_paginated(self, utilisateur_id, page, per_page):
         return self.settings_service.get_settings_by_utilisateur_paginated(utilisateur_id, page, per_page)
     
-    def get_setting_by_key(self, key):
-        return self.settings_service.get_setting_by_key(key)
+    def get_setting_by_user_and_codification(self, utilisateur_id, codification_id):
+        return self.settings_service.get_setting_by_user_and_codification(utilisateur_id, codification_id)
     
     def create_setting(self, setting_data):
         return self.settings_service.create_setting(setting_data)

@@ -270,6 +270,10 @@ class Codification(db.Model):
     libelle = db.Column(db.String(200), nullable=False)
     param = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(200), nullable=False)
+    type_valeur = db.Column(db.String(50), nullable=False, default='text')  # 'select', 'text', 'boolean', 'number'
+    valeurs_possibles = db.Column(db.Text, nullable=True)  # JSON string pour les options
+    valeur_defaut = db.Column(db.String(500), nullable=True)  # Valeur par défaut
+    obligatoire = db.Column(db.Boolean, nullable=False, default=True)  # Si le paramètre est obligatoire
     creer_par = db.Column(db.Integer, nullable=False)
     modifier_par = db.Column(db.Integer, nullable=False)
     creer_a = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -281,6 +285,11 @@ class Settings(db.Model):
     id_set = db.Column(db.Integer, primary_key=True)
     id_utilisateur = db.Column(db.Integer, db.ForeignKey('utilisateur.id_utilisateur'), nullable=False)
     id_codification = db.Column(db.Integer, db.ForeignKey('codification.id'), nullable=False)
+    value = db.Column(db.String(500), nullable=False)
+    creer_par = db.Column(db.Integer, nullable=True)
+    modifier_par = db.Column(db.Integer, nullable=True)
+    creer_a = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
+    modifier_a = db.Column(db.DateTime, nullable=True, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Ajouter les relations
     utilisateur = db.relationship('Utilisateur', backref='settings')

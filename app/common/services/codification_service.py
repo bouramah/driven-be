@@ -1,4 +1,4 @@
-from app.common.models import Codification, db
+from app.common.models import Codification, Settings, db
 from sqlalchemy import or_
 
 class CodificationService:
@@ -55,11 +55,20 @@ class CodificationService:
     
     def delete_codification(self, codification_id):
         codification = self.get_codification_by_id(codification_id)
-        if codification:
-            db.session.delete(codification)
-            db.session.commit()
-            return True
-        return False
+        if not codification:
+            return False
+            
+        # Vérifier si la codification est utilisée par des settings
+        settings_count = Settings.query.filter_by(id_codification=codification_id).count()
+        if settings_count > 0:
+            raise ValueError({
+                "fr": f"Impossible de supprimer cette codification car elle est utilisée par {settings_count} paramètre(s) utilisateur. Supprimez d'abord les paramètres associés.",
+                "en": f"Cannot delete this codification as it is used by {settings_count} user setting(s). Please delete the associated settings first."
+            })
+            
+        db.session.delete(codification)
+        db.session.commit()
+        return True
     
     def search_codifications(self, search_term):
         return Codification.query.filter(

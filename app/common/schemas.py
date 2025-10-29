@@ -148,6 +148,10 @@ class CodificationSchema(Schema):
     libelle = fields.Str(required=True)
     param = fields.Str(required=True)
     description = fields.Str(required=True)
+    type_valeur = fields.Str(required=True)
+    valeurs_possibles = fields.Str(allow_none=True)
+    valeur_defaut = fields.Str(allow_none=True)
+    obligatoire = fields.Bool(required=True)
     creer_par = fields.Int(required=True)
     modifier_par = fields.Int(required=True)
     creer_a = fields.DateTime(dump_only=True)
@@ -157,6 +161,11 @@ class SettingsSchema(Schema):
     id_set = fields.Int()
     id_utilisateur = fields.Int()
     id_codification = fields.Int()
+    value = fields.Str()
+    creer_par = fields.Int()
+    modifier_par = fields.Int()
+    creer_a = fields.DateTime()
+    modifier_a = fields.DateTime()
     codification = fields.Nested(CodificationSchema)
 
 class ObjectifSchema(Schema):

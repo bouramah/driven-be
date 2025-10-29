@@ -71,15 +71,7 @@ def get_setting(id):
     }
     return jsonify(response)
 
-@settings_bp.route('/key/<string:key>', methods=['GET'])
-@jwt_required()
-@api_fonction(nom_fonction='get_setting_by_key', app_id=1, description='Récupérer un paramètre par sa clé', auto_register=True)
-@trace_action(action_type="SETTINGS", code_prefix="SET_KEY")
-def get_setting_by_key(key):
-    setting = settings_controller.get_setting_by_key(key)
-    if not setting:
-        return jsonify({'message': 'Setting not found'}), 404
-    return jsonify(setting_schema.dump(setting))
+# Route supprimée - on utilise maintenant get_setting_by_user_and_codification
 
 @settings_bp.route('/utilisateur/<int:utilisateur_id>', methods=['GET'])
 @jwt_required()

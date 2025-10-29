@@ -29,8 +29,11 @@ class SettingsService:
         )
         return pagination.items, pagination.pages, pagination.total
     
-    def get_setting_by_key(self, key):
-        return Settings.query.filter_by(key=key).first()
+    def get_setting_by_user_and_codification(self, utilisateur_id, codification_id):
+        return Settings.query.filter_by(
+            id_utilisateur=utilisateur_id,
+            id_codification=codification_id
+        ).first()
     
     def create_setting(self, setting_data):
         # Vérifier qu'il n'existe pas déjà un setting pour ce param et cet utilisateur

@@ -190,26 +190,55 @@ def update_codification(id):
 @api_fonction(nom_fonction='delete_codification', app_id=1, description='Supprimer une codification', auto_register=True)
 @trace_action(action_type="CODIFICATION", code_prefix="COD")
 def delete_codification(id):
-    result = codification_controller.delete_codification(id)
+    try:
+        result = codification_controller.delete_codification(id)
+        
+        if not result:
+            response = {
+                "error": True,
+                "message": {
+                    "en": "Codification not found",
+                    "fr": "Codification non trouvée"
+                }
+            }
+            return jsonify(response), 404
+        
+        response = {
+            "error": False,
+            "message": {
+                "en": "Codification deleted successfully",
+                "fr": "Codification supprimée avec succès"
+            }
+        }
+        return jsonify(response), 200
     
-    if not result:
+    except ValueError as e:
+        # L'exception contient un dictionnaire avec les messages en FR et EN
+        error_messages = e.args[0] if e.args and isinstance(e.args[0], dict) else {
+            "fr": "Erreur lors de la suppression de la codification",
+            "en": "Error deleting codification"
+        }
+        
+        response = {
+            "error": True,
+            "message": error_messages
+        }
+        
+        # Log pour debug
+        print(f"DEBUG - Sending error response: {response}")
+        
+        return jsonify(response), 400
+    
+    except Exception as e:
         response = {
             "error": True,
             "message": {
-                "en": "Codification not found",
-                "fr": "Codification non trouvée"
-            }
+                "en": "Failed to delete codification",
+                "fr": "Échec de la suppression de la codification"
+            },
+            "details": str(e)
         }
-        return jsonify(response), 404
-    
-    response = {
-        "error": False,
-        "message": {
-            "en": "Codification deleted successfully",
-            "fr": "Codification supprimée avec succès"
-        }
-    }
-    return jsonify(response)
+        return jsonify(response), 500
 
 @codification_bp.route('/search', methods=['GET'])
 @jwt_required()
