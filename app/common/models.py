@@ -309,7 +309,12 @@ class Objectif(db.Model):
     progression = db.Column(db.Float, nullable=False, default=0.0)
     valeur = db.Column(db.Float, nullable=True)
     id_utilisateur = db.Column(db.Integer, db.ForeignKey('utilisateur.id_utilisateur'), nullable=False)
+    app_id = db.Column(db.Integer, db.ForeignKey('application.app_id'), nullable=False)
     creer_par = db.Column(db.Integer, nullable=False)
     modifier_par = db.Column(db.Integer, nullable=False)
     creer_a = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    modifier_a = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow) 
+    modifier_a = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    utilisateur = db.relationship('Utilisateur', backref='objectifs', lazy=True)
+    application = db.relationship('Application', backref='objectifs', lazy=True) 

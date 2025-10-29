@@ -1,8 +1,14 @@
-from app.common.models import Trace, Utilisateur, db
-from datetime import datetime, timedelta
+from app.common.models import Trace, db
+from datetime import datetime, timedelta, date
 import json
 from flask import request
 from sqlalchemy.orm import joinedload
+
+def json_serial(obj):
+    """Helper function pour convertir les objets datetime en chaînes pour JSON"""
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError(f"Type {type(obj)} non sérialisable")
 
 class TraceService:
     def get_all_traces(self):
@@ -70,12 +76,20 @@ class TraceService:
     def ajouter_trace(action, detail, code, id_utilisateur=None, params=None, code_sql=None):
         """Ajouter une nouvelle trace"""
         try:
+            # Convertir params en JSON en gérant les objets datetime
+            param_json = None
+            if params:
+                try:
+                    param_json = json.dumps(params, default=json_serial, ensure_ascii=False)
+                except (TypeError, ValueError) as e:
+                    param_json = json.dumps(params, default=str, ensure_ascii=False)
+            
             trace = Trace(
                 date=datetime.utcnow(),
                 action=action,
                 detail=detail,
                 code=code,
-                param=json.dumps(params) if params else None,
+                param=param_json,
                 code_sql=code_sql,
                 end_point=request.path,
                 id_utilisateur=id_utilisateur

@@ -196,3 +196,23 @@ class FonctionAPISchema(Schema):
     modifier_a = fields.DateTime()
     application = fields.Nested(ApplicationSchema)
 
+class ObjectifSchema(Schema):
+    id = fields.Int(dump_only=True)
+    titre = fields.Str(required=True)
+    description = fields.Str(required=True)
+    type = fields.Str(required=True)
+    periode = fields.Str(required=True)
+    date_debut = fields.DateTime(required=True)
+    date_fin = fields.DateTime(required=True)
+    statut = fields.Str(required=True)
+    progression = fields.Float(required=True)
+    valeur = fields.Float(allow_none=True)
+    id_utilisateur = fields.Int(required=True)
+    app_id = fields.Int(required=True)
+    creer_par = fields.Int(required=True)
+    modifier_par = fields.Int(required=True)
+    creer_a = fields.DateTime(dump_only=True)
+    modifier_a = fields.DateTime(dump_only=True)
+    utilisateur = fields.Nested(UtilisateurSchema, dump_only=True)
+    application = fields.Nested(ApplicationSchema, dump_only=True)
+
