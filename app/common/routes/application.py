@@ -1,13 +1,15 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from app.common.controllers.application_controller import ApplicationController
-from app.common.schemas import ApplicationSchema
+from app.common.schemas import ApplicationSchema, UtilisateurSchema
 from app.common.decorators import api_fonction, trace_action, auto_set_user_fields
 
 application_bp = Blueprint('application', __name__)
 application_controller = ApplicationController()
 application_schema = ApplicationSchema()
 applications_schema = ApplicationSchema(many=True)
+utilisateur_schema = UtilisateurSchema()
+utilisateurs_schema = UtilisateurSchema(many=True)
 
 @application_bp.route('/', methods=['GET'])
 @jwt_required()
@@ -177,6 +179,51 @@ def delete_application(id):
             'message': {
                 'en': 'Error while deleting application',
                 'fr': 'Erreur lors de la suppression de l\'application'
+            },
+            'details': str(e)
+        }), 500
+
+@application_bp.route('/<int:app_id>/utilisateurs', methods=['GET'])
+@jwt_required()
+@api_fonction(nom_fonction='get_utilisateurs_by_application', app_id=1, description='Récupérer les utilisateurs d\'une application', auto_register=True)
+@trace_action(action_type="APPLICATION", code_prefix="APP")
+def get_utilisateurs_by_application(app_id):
+    try:
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        
+        if per_page > 50:
+            per_page = 50
+        
+        utilisateurs_paginated = application_controller.get_utilisateurs_by_application_paginated(app_id, page, per_page)
+        
+        pagination_metadata = {
+            "page": page,
+            "per_page": per_page,
+            "total_items": utilisateurs_paginated.total,
+            "total_pages": utilisateurs_paginated.pages,
+            "has_next": utilisateurs_paginated.has_next,
+            "has_prev": utilisateurs_paginated.has_prev,
+            "next_page": utilisateurs_paginated.next_num if utilisateurs_paginated.has_next else None,
+            "prev_page": utilisateurs_paginated.prev_num if utilisateurs_paginated.has_prev else None
+        }
+        
+        result = {
+            "error": False,
+            "message": {
+                "en": "Users retrieved successfully",
+                "fr": "Utilisateurs récupérés avec succès"
+            },
+            "data": utilisateurs_schema.dump(utilisateurs_paginated.items),
+            "pagination": pagination_metadata
+        }
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': 'Error while retrieving users',
+                'fr': 'Erreur lors de la récupération des utilisateurs'
             },
             'details': str(e)
         }), 500 

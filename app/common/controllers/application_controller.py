@@ -10,6 +10,9 @@ class ApplicationController:
     def get_application_by_id(self, app_id):
         return self.application_service.get_application_by_id(app_id)
     
+    def get_utilisateurs_by_application_paginated(self, app_id, page, per_page):
+        return self.application_service.get_utilisateurs_by_application_paginated(app_id, page, per_page)
+    
     def create_application(self, app_data, icon_file=None):
         return self.application_service.create_application(app_data, icon_file)
     

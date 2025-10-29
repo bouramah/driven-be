@@ -1,5 +1,6 @@
-from app.common.models import Application, db
+from app.common.models import Application, Utilisateur, UtilisateurRole, db
 from app.common.utils.file_manager import FileManager
+from sqlalchemy.orm import joinedload
 
 class ApplicationService:
     def __init__(self):
@@ -13,6 +14,25 @@ class ApplicationService:
     
     def get_application_by_id(self, app_id):
         return Application.query.get(app_id)
+    
+    def get_utilisateurs_by_application_paginated(self, app_id, page, per_page):
+        """Récupérer tous les utilisateurs d'une application avec pagination"""
+        # Récupérer les IDs des utilisateurs ayant un rôle pour cette application
+        user_ids = db.session.query(UtilisateurRole.id_utilisateur).filter_by(app_id=app_id).distinct().all()
+        user_ids = [id[0] for id in user_ids]  # Convertir les tuples en liste simple
+        
+        if not user_ids:
+            # Retourner une pagination vide si aucun utilisateur
+            # Utiliser une condition impossible pour créer une pagination vide
+            return Utilisateur.query.filter(Utilisateur.id_utilisateur < 0).paginate(
+                page=page, per_page=per_page, error_out=False
+            )
+        
+        # Récupérer les utilisateurs correspondants avec leurs relations
+        return Utilisateur.query.options(
+            joinedload(Utilisateur.utilisateur_roles).joinedload(UtilisateurRole.application),
+            joinedload(Utilisateur.entite)
+        ).filter(Utilisateur.id_utilisateur.in_(user_ids)).paginate(page=page, per_page=per_page, error_out=False)
     
     def create_application(self, app_data, icon_file=None):
         # Vérifier si une application avec le même nom existe déjà

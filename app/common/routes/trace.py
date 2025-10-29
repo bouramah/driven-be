@@ -309,4 +309,59 @@ def get_traces_by_date_range():
         "data": traces_schema.dump(traces_paginated.items),
         "pagination": pagination_metadata
     }
-    return jsonify(result) 
+    return jsonify(result)
+
+@trace_bp.route('/search', methods=['GET'])
+@jwt_required()
+@api_fonction(nom_fonction='search_traces', app_id=1, description='Rechercher des traces', auto_register=True)
+@trace_action(action_type="TRACE", code_prefix="TRC_SEARCH")
+def search_traces():
+    try:
+        search_term = request.args.get('q', '')
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        
+        if per_page > 50:
+            per_page = 50
+        
+        if not search_term:
+            return jsonify({
+                'error': True,
+                'message': {
+                    'en': 'Search term is required',
+                    'fr': 'Le terme de recherche est requis'
+                }
+            }), 400
+        
+        traces_paginated = trace_controller.search_traces_paginated(search_term, page, per_page)
+        
+        pagination_metadata = {
+            "page": page,
+            "per_page": per_page,
+            "total_items": traces_paginated.total,
+            "total_pages": traces_paginated.pages,
+            "has_next": traces_paginated.has_next,
+            "has_prev": traces_paginated.has_prev,
+            "next_page": traces_paginated.next_num if traces_paginated.has_next else None,
+            "prev_page": traces_paginated.prev_num if traces_paginated.has_prev else None
+        }
+        
+        result = {
+            "error": False,
+            "message": {
+                "en": "Search results retrieved successfully",
+                "fr": "Résultats de recherche récupérés avec succès"
+            },
+            "data": traces_schema.dump(traces_paginated.items),
+            "pagination": pagination_metadata
+        }
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': 'Error while searching traces',
+                'fr': 'Erreur lors de la recherche des traces'
+            },
+            'details': str(e)
+        }), 500 

@@ -38,4 +38,8 @@ class TraceController:
         return self.trace_service.get_traces_by_action_paginated(action, page, per_page)
     
     def get_traces_by_date_range_paginated(self, start_date, end_date, page, per_page):
-        return self.trace_service.get_traces_by_date_range_paginated(start_date, end_date, page, per_page) 
+        return self.trace_service.get_traces_by_date_range_paginated(start_date, end_date, page, per_page)
+    
+    def search_traces_paginated(self, search_term, page, per_page):
+        """Rechercher des traces avec pagination"""
+        return self.trace_service.search_traces_paginated(search_term, page, per_page) 

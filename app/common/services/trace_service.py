@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, date
 import json
 from flask import request
 from sqlalchemy.orm import joinedload
+from sqlalchemy import or_
 
 def json_serial(obj):
     """Helper function pour convertir les objets datetime en chaînes pour JSON"""
@@ -71,6 +72,18 @@ class TraceService:
             Trace.date >= start_date,
             Trace.date < end_date + timedelta(days=1)
         ).order_by(Trace.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
+    
+    def search_traces_paginated(self, search_term, page, per_page):
+        """Rechercher des traces avec pagination"""
+        query = Trace.query.options(joinedload(Trace.utilisateur)).filter(
+            or_(
+                Trace.action.ilike(f'%{search_term}%'),
+                Trace.detail.ilike(f'%{search_term}%'),
+                Trace.code.ilike(f'%{search_term}%'),
+                Trace.end_point.ilike(f'%{search_term}%')
+            )
+        ).order_by(Trace.date.desc())
+        return query.paginate(page=page, per_page=per_page, error_out=False)
 
     @staticmethod
     def ajouter_trace(action, detail, code, id_utilisateur=None, params=None, code_sql=None):

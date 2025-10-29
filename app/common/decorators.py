@@ -4,13 +4,15 @@ from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
 from app.common.models import FonctionAPI, Utilisateur
 from app.common.services.trace_service import TraceService
 
-def require_fonction_permission(nom_fonction):
+def require_fonction_permission(nom_fonction, app_id=None):
     """
     Décorateur pour vérifier si l'utilisateur a la permission d'accéder à une fonction API.
     Utilise JWT pour l'authentification au lieu de g.utilisateur.
     
     Args:
         nom_fonction (str): Nom de la fonction API à vérifier
+        app_id (int, optional): ID de l'application à utiliser pour la vérification. 
+                                Si None, récupéré depuis les paramètres de la requête.
         
     Returns:
         function: Décorateur qui vérifie les permissions
@@ -48,10 +50,10 @@ def require_fonction_permission(nom_fonction):
                     }
                 }), 404
             
-            # Récupérer l'ID de l'application depuis la configuration ou les paramètres
-            app_id = kwargs.get('app_id') or request.args.get('app_id') or current_app.config.get('DEFAULT_APP_ID')
+            # Utiliser l'app_id du décorateur s'il est fourni, sinon le récupérer depuis les paramètres
+            check_app_id = app_id or kwargs.get('app_id') or request.args.get('app_id') or current_app.config.get('DEFAULT_APP_ID')
             
-            if not app_id:
+            if not check_app_id:
                 return jsonify({
                     'error': True,
                     'message': {
@@ -60,11 +62,25 @@ def require_fonction_permission(nom_fonction):
                     }
                 }), 400
             
+            # Vérifier si la fonction vient d'être créée automatiquement (via register_fonction_api)
+            from flask import g
+            fonction_auto_created = getattr(g, 'fonction_auto_created', False)
+            fonction_name = getattr(g, 'fonction_name', None)
+            fonction_app_id = getattr(g, 'fonction_app_id', None)
+            
+            # Si la fonction vient d'être créée avec auto_register, permettre l'accès
+            # (logique : si aucune permission n'est définie pour cette nouvelle fonction, elle est accessible)
+            if fonction_auto_created and fonction_name == nom_fonction and fonction_app_id == check_app_id:
+                current_app.logger.info(f"Fonction '{nom_fonction}' vient d'être créée automatiquement, accès autorisé")
+                # Nettoyer le flag
+                g.fonction_auto_created = False
+                return f(*args, **kwargs)
+            
             # Vérifier si l'utilisateur a la permission pour cette fonction
             # La méthode has_permission_for_fonction vérifie si l'utilisateur a un rôle
             # qui possède une permission associée à cette fonction API
-            if not utilisateur.has_permission_for_fonction(app_id, nom_fonction):
-                current_app.logger.error(f"Accès refusé à {nom_fonction} de l'application {app_id} pour l'utilisateur {utilisateur.login} (ID: {utilisateur.id_utilisateur})")
+            if not utilisateur.has_permission_for_fonction(check_app_id, nom_fonction):
+                current_app.logger.error(f"Accès refusé à {nom_fonction} de l'application {check_app_id} pour l'utilisateur {utilisateur.login} (ID: {utilisateur.id_utilisateur})")
                 return jsonify({
                     'error': True,
                     'message': {
@@ -80,7 +96,7 @@ def require_fonction_permission(nom_fonction):
     
     return decorator
 
-def register_fonction_api(app_id, description=None):
+def register_fonction_api(app_id, description=None, nom_fonction=None):
     """
     Décorateur pour enregistrer automatiquement une fonction API dans la base de données.
     Utile lors du développement pour créer automatiquement les fonctions API.
@@ -88,6 +104,7 @@ def register_fonction_api(app_id, description=None):
     Args:
         app_id (int): ID de l'application
         description (str, optional): Description de la fonction API
+        nom_fonction (str, optional): Nom de la fonction API. Si None, utilise le nom de la fonction Python.
         
     Returns:
         function: Décorateur qui enregistre la fonction API
@@ -95,25 +112,25 @@ def register_fonction_api(app_id, description=None):
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
-            # Récupérer le nom de la fonction
-            nom_fonction = f.__name__
+            from app import db
+            # Utiliser le nom_fonction fourni ou le nom de la fonction Python
+            func_name = nom_fonction or f.__name__
             
-            # Vérifier si la fonction existe déjà
+            # Vérifier si la fonction existe déjà (avec refresh de la session pour éviter les problèmes de cache)
+            db.session.expire_all()
             fonction = FonctionAPI.query.filter_by(
-                nom_fonction=nom_fonction,
+                nom_fonction=func_name,
                 app_id=app_id
             ).first()
             
             # Si la fonction n'existe pas, la créer
             if not fonction:
-                from app import db
-                
                 # Utiliser la docstring de la fonction comme description si non spécifiée
-                func_description = description or f.__doc__ or f"Fonction {nom_fonction}"
+                func_description = description or f.__doc__ or f"Fonction {func_name}"
                 
                 # Créer la fonction API
                 fonction = FonctionAPI(
-                    nom_fonction=nom_fonction,
+                    nom_fonction=func_name,
                     description=func_description,
                     app_id=app_id,
                     creer_par=1,  # Utilisateur système par défaut
@@ -123,7 +140,13 @@ def register_fonction_api(app_id, description=None):
                 db.session.add(fonction)
                 db.session.commit()
                 
-                current_app.logger.info(f"Fonction API '{nom_fonction}' enregistrée automatiquement")
+                # Marquer que la fonction vient d'être créée dans le contexte Flask
+                from flask import g
+                g.fonction_auto_created = True
+                g.fonction_name = func_name
+                g.fonction_app_id = app_id
+                
+                current_app.logger.info(f"Fonction API '{func_name}' enregistrée automatiquement")
             
             # Exécuter la fonction originale
             return f(*args, **kwargs)
@@ -149,14 +172,74 @@ def api_fonction(nom_fonction=None, app_id=None, description=None, auto_register
         # Utiliser le nom de la fonction Python si nom_fonction n'est pas spécifié
         func_name = nom_fonction or f.__name__
         
-        # Appliquer le décorateur de permission
-        decorated = require_fonction_permission(func_name)(f)
+        # Utiliser l'app_id fourni dans le décorateur
+        check_app_id = app_id
         
-        # Si auto_register est True, appliquer également le décorateur d'enregistrement
+        # Si auto_register est True, créer un décorateur personnalisé qui combine les deux
         if auto_register and app_id:
-            decorated = register_fonction_api(app_id, description)(decorated)
-        
-        return decorated
+            @wraps(f)
+            def combined_decorator(*args, **kwargs):
+                from app import db
+                from flask import g
+                
+                # Étape 1 : Créer la fonction si elle n'existe pas
+                db.session.expire_all()
+                fonction = FonctionAPI.query.filter_by(
+                    nom_fonction=func_name,
+                    app_id=check_app_id
+                ).first()
+                
+                fonction_just_created = False
+                if not fonction:
+                    func_description = description or f.__doc__ or f"Fonction {func_name}"
+                    fonction = FonctionAPI(
+                        nom_fonction=func_name,
+                        description=func_description,
+                        app_id=check_app_id,
+                        creer_par=1,
+                        modifier_par=1
+                    )
+                    db.session.add(fonction)
+                    db.session.commit()
+                    fonction_just_created = True
+                    current_app.logger.info(f"Fonction API '{func_name}' enregistrée automatiquement")
+                
+                # Étape 2 : Vérifier les permissions SEULEMENT si la fonction existait déjà
+                # Si elle vient d'être créée, permettre l'accès (logique: pas de permissions = accessible)
+                if fonction_just_created:
+                    current_app.logger.info(f"Fonction '{func_name}' vient d'être créée, accès autorisé")
+                    return f(*args, **kwargs)
+                
+                # Vérifier les permissions pour les fonctions existantes
+                verify_jwt_in_request()
+                login = get_jwt_identity()
+                utilisateur = Utilisateur.query.filter_by(login=login).first()
+                if not utilisateur:
+                    return jsonify({
+                        'error': True,
+                        'message': {
+                            'fr': 'Utilisateur non trouvé',
+                            'en': 'User not found'
+                        }
+                    }), 404
+                
+                if not utilisateur.has_permission_for_fonction(check_app_id, func_name):
+                    current_app.logger.error(f"Accès refusé à {func_name} de l'application {check_app_id} pour l'utilisateur {utilisateur.login}")
+                    return jsonify({
+                        'error': True,
+                        'message': {
+                            'fr': 'Accès non autorisé à cette fonction',
+                            'en': 'Unauthorized access to this function'
+                        }
+                    }), 403
+                
+                return f(*args, **kwargs)
+            
+            return combined_decorator
+        else:
+            # Appliquer le décorateur de permission avec l'app_id si fourni
+            decorated = require_fonction_permission(func_name, check_app_id)(f)
+            return decorated
     
     return decorator 
 
