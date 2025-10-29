@@ -1,6 +1,6 @@
 from app import db
 from app.common.models import FonctionAPI, FonctionPermission, Permission
-from sqlalchemy import and_
+from sqlalchemy import and_, or_
 from sqlalchemy.orm import joinedload
 
 class FonctionAPIService:    
@@ -23,6 +23,18 @@ class FonctionAPIService:
     def get_fonctions_by_app(self, app_id):
         """Récupérer toutes les fonctions API d'une application"""
         return FonctionAPI.query.filter_by(app_id=app_id).all()
+    
+    def search_fonctions_paginated(self, search_term, page, per_page):
+        """Rechercher des fonctions API avec pagination"""
+        query = FonctionAPI.query.options(
+            joinedload(FonctionAPI.application)
+        ).filter(
+            or_(
+                FonctionAPI.nom_fonction.ilike(f'%{search_term}%'),
+                FonctionAPI.description.ilike(f'%{search_term}%')
+            )
+        )
+        return query.paginate(page=page, per_page=per_page, error_out=False)
     
     def create_fonction(self, fonction_data):
         """Créer une nouvelle fonction API"""

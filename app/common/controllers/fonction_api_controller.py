@@ -20,6 +20,10 @@ class FonctionAPIController:
         """Récupérer toutes les fonctions API d'une application"""
         return self.fonction_api_service.get_fonctions_by_app(app_id)
     
+    def search_fonctions_paginated(self, search_term, page, per_page):
+        """Rechercher des fonctions API avec pagination"""
+        return self.fonction_api_service.search_fonctions_paginated(search_term, page, per_page)
+    
     def create_fonction(self, fonction_data):
         """Créer une nouvelle fonction API"""
         return self.fonction_api_service.create_fonction(fonction_data)

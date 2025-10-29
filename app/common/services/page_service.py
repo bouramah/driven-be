@@ -33,6 +33,10 @@ class PageService:
             icon_path = self.file_manager.save_file(icon_file)
             if icon_path:
                 page_data['icon'] = icon_path
+        # Si icon est fourni dans page_data (comme nom d'icône textuel), l'utiliser directement
+        elif 'icon' in page_data and page_data['icon']:
+            # Icon est déjà dans page_data, pas besoin de traitement supplémentaire
+            pass
                 
         page = Page(**page_data)
         db.session.add(page)
@@ -62,14 +66,18 @@ class PageService:
                 raise ValueError(f"Une page avec le nom '{page_data['nom']}' existe déjà dans cette application")
         
         if icon_file:
-            # Supprimer l'ancienne icône si elle existe
-            if page.icon:
+            # Supprimer l'ancienne icône si elle existe et si c'était un fichier (pas un nom d'icône textuel)
+            if page.icon and page.icon.startswith('uploads/'):
                 self.file_manager.delete_file(page.icon)
             
             # Sauvegarder la nouvelle icône
             icon_path = self.file_manager.save_file(icon_file)
             if icon_path:
                 page_data['icon'] = icon_path
+        # Si icon est fourni dans page_data (comme nom d'icône textuel), l'utiliser directement
+        elif 'icon' in page_data:
+            # Icon est déjà dans page_data, pas besoin de traitement supplémentaire
+            pass
             
         for key, value in page_data.items():
             setattr(page, key, value)
@@ -80,9 +88,11 @@ class PageService:
     def delete_page(self, page_id):
         page = self.get_page_by_id(page_id)
         if page:
-            # Supprimer l'icône si elle existe
+            # Supprimer l'icône si elle existe et si c'est un fichier (pas un nom d'icône textuel)
             if hasattr(page, 'icon') and page.icon:
-                self.file_manager.delete_file(page.icon)
+                # Vérifier si c'est un chemin de fichier (commence par 'uploads/') et non un nom d'icône textuel
+                if page.icon.startswith('uploads/'):
+                    self.file_manager.delete_file(page.icon)
                 
             db.session.delete(page)
             db.session.commit()

@@ -115,6 +115,53 @@ def get_fonctions_by_app(app_id):
             'details': str(e)
         }), 500
 
+@fonction_api_bp.route('/search', methods=['GET'])
+@jwt_required()
+@api_fonction(nom_fonction='search_fonctions', app_id=1, description='Rechercher des fonctions API', auto_register=True)
+@trace_action(action_type="FONCTION_API", code_prefix="FAPI_SEARCH")
+def search_fonctions():
+    search_term = request.args.get('q', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    
+    # Limiter per_page à un maximum de 50
+    if per_page > 50:
+        per_page = 50
+    
+    try:
+        fonctions_paginated = fonctions_api_controller.search_fonctions_paginated(search_term, page, per_page)
+        
+        pagination_metadata = {
+            "page": page,
+            "per_page": per_page,
+            "total_items": fonctions_paginated.total,
+            "total_pages": fonctions_paginated.pages,
+            "has_next": fonctions_paginated.has_next,
+            "has_prev": fonctions_paginated.has_prev,
+            "next_page": fonctions_paginated.next_num if fonctions_paginated.has_next else None,
+            "prev_page": fonctions_paginated.prev_num if fonctions_paginated.has_prev else None
+        }
+        
+        result = {
+            "error": False,
+            "message": {
+                "en": "Search results retrieved successfully",
+                "fr": "Résultats de recherche récupérés avec succès"
+            },
+            "data": fonctions_api_schema.dump(fonctions_paginated.items),
+            "pagination": pagination_metadata
+        }
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': 'Error while searching functions',
+                'fr': 'Erreur lors de la recherche des fonctions'
+            },
+            'details': str(e)
+        }), 500
+
 @fonction_api_bp.route('/<int:id>', methods=['GET'])
 @jwt_required()
 @api_fonction(nom_fonction='get_fonction', app_id=1, description='Récupérer une fonction API par son ID', auto_register=True)
