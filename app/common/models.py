@@ -28,6 +28,7 @@ class Page(db.Model):
     description = db.Column(db.Text, nullable=False)
     lien = db.Column(db.String(300), nullable=False)
     icon = db.Column(db.String(100), nullable=True)
+    ordre = db.Column(db.Integer, nullable=True)
     creer_par = db.Column(db.Integer, nullable=False)
     modifier_par = db.Column(db.Integer, nullable=False)
     creer_a = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

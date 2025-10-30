@@ -17,6 +17,7 @@ class PageSchema(Schema):
     description = fields.Str(required=True)
     lien = fields.Str(required=True)
     icon = fields.Str(required=False)
+    ordre = fields.Int(required=False, allow_none=True)
     creer_par = fields.Int(required=True)
     modifier_par = fields.Int(required=True)
     creer_a = fields.DateTime(dump_only=True)

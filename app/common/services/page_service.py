@@ -9,12 +9,27 @@ class PageService:
         )
     
     def get_all_pages(self):
-        return Page.query.all()
+        return Page.query.order_by(Page.ordre.asc().nullslast(), Page.nom.asc()).all()
     
     def get_page_by_id(self, page_id):
         return Page.query.get(page_id)
     
     def create_page(self, page_data, icon_file=None):
+        # Convertir les types des champs
+        if 'app_id' in page_data and page_data['app_id']:
+            page_data['app_id'] = int(page_data['app_id'])
+        
+        if 'ordre' in page_data:
+            if page_data['ordre'] == '' or page_data['ordre'] is None:
+                page_data['ordre'] = None
+            else:
+                try:
+                    page_data['ordre'] = int(page_data['ordre'])
+                except (ValueError, TypeError):
+                    page_data['ordre'] = None
+        
+        print(f"DEBUG create_page: page_data = {page_data}")
+        
         # Vérifier si l'application existe si app_id est fourni
         if 'app_id' in page_data and page_data['app_id']:
             application = Application.query.get(page_data['app_id'])
@@ -47,6 +62,20 @@ class PageService:
         page = self.get_page_by_id(page_id)
         if not page:
             return None
+        
+        # Convertir les types des champs
+        if 'app_id' in page_data and page_data['app_id']:
+            page_data['app_id'] = int(page_data['app_id'])
+        
+        if 'ordre' in page_data:
+            if page_data['ordre'] == '' or page_data['ordre'] is None:
+                page_data['ordre'] = None
+            else:
+                try:
+                    page_data['ordre'] = int(page_data['ordre'])
+                except (ValueError, TypeError):
+                    page_data['ordre'] = None
+        
         
         # Vérifier si l'application existe si app_id est modifié
         if 'app_id' in page_data and page_data['app_id'] and page_data['app_id'] != page.app_id:
@@ -100,7 +129,7 @@ class PageService:
         return False
     
     def get_pages_by_application(self, app_id):
-        return Page.query.filter_by(app_id=app_id).all()
+        return Page.query.filter_by(app_id=app_id).order_by(Page.ordre.asc().nullslast(), Page.nom.asc()).all()
     
     def add_pages_to_application(self, app_id, page_ids):
         """Ajoute plusieurs pages à une application"""
