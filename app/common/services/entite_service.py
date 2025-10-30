@@ -86,9 +86,17 @@ class EntiteService:
                 raise ValueError("fr:Erreur de contrainte de base de données|en:Database constraint error")
     
     def delete_entite(self, entite_id):
-        entite = self.get_entite_by_id(entite_id)
-        if entite:
+        try:
+            entite = self.get_entite_by_id(entite_id)
+            if not entite:
+                return False
             db.session.delete(entite)
             db.session.commit()
             return True
-        return False 
+        except IntegrityError:
+            db.session.rollback()
+            # L'entité est référencée ailleurs (contrainte d'intégrité)
+            raise ValueError({
+                "fr": "Impossible de supprimer l'entité car elle est utilisée",
+                "en": "Cannot delete entity because it is in use"
+            })

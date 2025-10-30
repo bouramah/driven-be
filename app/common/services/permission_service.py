@@ -1,4 +1,5 @@
 from app.common.models import Permission, db, RolePermission, Role
+from sqlalchemy.exc import IntegrityError
 
 class PermissionService:    
     def get_permissions_paginated(self, page, per_page):
@@ -55,12 +56,28 @@ class PermissionService:
             raise
     
     def delete_permission(self, permission_id):
-        permission = self.get_permission_by_id(permission_id)
-        if permission:
+        try:
+            permission = self.get_permission_by_id(permission_id)
+            if not permission:
+                return False
+
+            # Empêcher la suppression si la permission est utilisée par des rôles
+            in_use = RolePermission.query.filter_by(permission_id=permission_id).first()
+            if in_use:
+                raise ValueError({
+                    'fr': "Impossible de supprimer la permission car elle est utilisée par des rôles",
+                    'en': 'Cannot delete permission because it is used by roles'
+                })
+
             db.session.delete(permission)
             db.session.commit()
             return True
-        return False
+        except IntegrityError:
+            db.session.rollback()
+            raise ValueError({
+                'fr': "Impossible de supprimer la permission car elle est référencée",
+                'en': 'Cannot delete permission because it is referenced'
+            })
     
     def get_roles_with_permission(self, permission_id):
         """Obtenir les rôles qui ont une permission spécifique"""

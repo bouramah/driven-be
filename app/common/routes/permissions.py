@@ -184,6 +184,15 @@ def delete_permission(id):
                 'fr': 'Permission supprimée avec succès'
             }
         })
+    except ValueError as e:
+        error_messages = e.args[0] if e.args and isinstance(e.args[0], dict) else {
+            'fr': "Impossible de supprimer la permission",
+            'en': 'Unable to delete permission'
+        }
+        return jsonify({
+            'error': True,
+            'message': error_messages
+        }), 400
     except Exception as e:
         return jsonify({
             'error': True,

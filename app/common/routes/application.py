@@ -211,6 +211,15 @@ def delete_application(id):
                 'fr': 'Application supprimée avec succès'
             }
         })
+    except ValueError as e:
+        error_messages = e.args[0] if e.args and isinstance(e.args[0], dict) else {
+            'fr': "Impossible de supprimer l'application",
+            'en': 'Unable to delete application'
+        }
+        return jsonify({
+            'error': True,
+            'message': error_messages
+        }), 400
     except Exception as e:
         return jsonify({
             'error': True,

@@ -1,6 +1,7 @@
-from app.common.models import Application, Utilisateur, UtilisateurRole, db
+from app.common.models import Application, Utilisateur, UtilisateurRole, db, Role
 from app.common.utils.file_manager import FileManager
 from sqlalchemy.orm import joinedload
+from sqlalchemy.exc import IntegrityError
 
 class ApplicationService:
     def __init__(self):
@@ -100,13 +101,30 @@ class ApplicationService:
         return application
     
     def delete_application(self, app_id):
-        application = self.get_application_by_id(app_id)
-        if application:
+        try:
+            application = self.get_application_by_id(app_id)
+            if not application:
+                return False
+
+            # Vérifier si des rôles ou des utilisateurs-rôles référencent cette application
+            has_roles = Role.query.filter_by(app_id=app_id).first() is not None
+            has_user_roles = UtilisateurRole.query.filter_by(app_id=app_id).first() is not None
+            if has_roles or has_user_roles:
+                raise ValueError({
+                    'fr': "Impossible de supprimer l'application car elle est utilisée",
+                    'en': 'Cannot delete application because it is in use'
+                })
+
             # Supprimer l'icône si elle existe
             if application.app_icon:
                 self.file_manager.delete_file(application.app_icon)
-                
+
             db.session.delete(application)
             db.session.commit()
             return True
-        return False 
+        except IntegrityError:
+            db.session.rollback()
+            raise ValueError({
+                'fr': "Impossible de supprimer l'application car elle est référencée",
+                'en': 'Cannot delete application because it is referenced'
+            })

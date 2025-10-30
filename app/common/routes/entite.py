@@ -209,23 +209,40 @@ def update_entite(id):
 @api_fonction(nom_fonction='delete_entite', app_id=1, description='Supprimer une entité', auto_register=True)
 @trace_action(action_type="ENTITE", code_prefix="ENT")
 def delete_entite(id):
-    success = entite_controller.delete_entite(id)
-    
-    if not success:
+    try:
+        success = entite_controller.delete_entite(id)
+        if not success:
+            result = {
+                "error": True,
+                "message": {
+                    "en": "Entity not found",
+                    "fr": "Entité non trouvée"
+                }
+            }
+            return jsonify(result), 404
         result = {
-            "error": True,
+            "error": False,
             "message": {
-                "en": "Entity not found",
-                "fr": "Entité non trouvée"
+                "en": "Entity deleted successfully",
+                "fr": "Entité supprimée avec succès"
             }
         }
-        return jsonify(result), 404
-    
-    result = {
-        "error": False,
-        "message": {
-            "en": "Entity deleted successfully",
-            "fr": "Entité supprimée avec succès"
+        return jsonify(result)
+    except ValueError as e:
+        error_messages = e.args[0] if e.args and isinstance(e.args[0], dict) else {
+            "fr": "Impossible de supprimer l'entité",
+            "en": "Unable to delete entity"
         }
-    }
-    return jsonify(result) 
+        return jsonify({
+            "error": True,
+            "message": error_messages
+        }), 400
+    except Exception as e:
+        return jsonify({
+            "error": True,
+            "message": {
+                "en": "Error while deleting entity",
+                "fr": "Erreur lors de la suppression de l'entité"
+            },
+            "details": str(e)
+        }), 500
