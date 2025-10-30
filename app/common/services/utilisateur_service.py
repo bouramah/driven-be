@@ -429,7 +429,12 @@ class UtilisateurService:
     def get_utilisateur_roles(self, utilisateur_id):
         """Récupérer tous les rôles d'un utilisateur"""
         try:
-            return UtilisateurRole.query.filter_by(id_utilisateur=utilisateur_id).all()
+            from app.common.models import RolePermission, Permission
+            return UtilisateurRole.query.options(
+                joinedload(UtilisateurRole.role).joinedload(Role.application),
+                joinedload(UtilisateurRole.role).joinedload(Role.role_permissions).joinedload(RolePermission.permission),
+                joinedload(UtilisateurRole.application)
+            ).filter_by(id_utilisateur=utilisateur_id).all()
             
         except Exception as e:
             print(f"Error getting user roles: {str(e)}")
