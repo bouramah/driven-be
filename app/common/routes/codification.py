@@ -13,7 +13,6 @@ codifications_schema = CodificationSchema(many=True)
 
 @codification_bp.route('/', methods=['GET'])
 @jwt_required()
-@api_fonction(nom_fonction='get_codifications', app_id=1, description='Récupérer toutes les codifications avec pagination', auto_register=True)
 @trace_action(action_type="CODIFICATION", code_prefix="COD")
 def get_codifications():
     page = request.args.get('page', 1, type=int)
@@ -74,7 +73,6 @@ def get_codification(id):
 
 @codification_bp.route('/param/<string:param>', methods=['GET'])
 @jwt_required()
-@api_fonction(nom_fonction='get_codification_by_param', app_id=1, description='Récupérer une codification par son paramètre', auto_register=True)
 @trace_action(action_type="CODIFICATION", code_prefix="COD_PARAM")
 def get_codification_by_param(param):
     codification = codification_controller.get_codification_by_param(param)

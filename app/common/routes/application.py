@@ -1,11 +1,13 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from app.common.controllers.utilisateur_controller import UtilisateurController
 from app.common.controllers.application_controller import ApplicationController
 from app.common.schemas import ApplicationSchema, UtilisateurSchema
 from app.common.decorators import api_fonction, trace_action, auto_set_user_fields
 
 application_bp = Blueprint('application', __name__)
 application_controller = ApplicationController()
+utilisateur_controller = UtilisateurController()
 application_schema = ApplicationSchema()
 applications_schema = ApplicationSchema(many=True)
 utilisateur_schema = UtilisateurSchema()
@@ -18,6 +20,42 @@ utilisateurs_schema = UtilisateurSchema(many=True)
 def get_applications():
     try:
         applications = application_controller.get_all_applications()
+        return jsonify({
+            'error': False,
+            'message': {
+                'en': 'Applications retrieved successfully',
+                'fr': 'Applications récupérées avec succès'
+            },
+            'data': applications_schema.dump(applications)
+        })
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': 'Error while retrieving applications',
+                'fr': 'Erreur lors de la récupération des applications'
+            },
+            'details': str(e)
+        }), 500
+
+@application_bp.route('/mes-apps', methods=['GET'])
+@jwt_required()
+@trace_action(action_type="APPLICATION", code_prefix="APP_MY")
+def get_my_applications():
+    try:
+        login = get_jwt_identity()
+        user = utilisateur_controller.get_utilisateur_by_login(login)
+        if not user:
+            return jsonify({
+                'error': True,
+                'message': {
+                    'en': 'User not found',
+                    'fr': 'Utilisateur non trouvé'
+                }
+            }), 404
+
+        applications = application_controller.get_applications_for_user(user)
+
         return jsonify({
             'error': False,
             'message': {

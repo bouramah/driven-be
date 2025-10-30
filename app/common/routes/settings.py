@@ -75,7 +75,6 @@ def get_setting(id):
 
 @settings_bp.route('/utilisateur/<int:utilisateur_id>', methods=['GET'])
 @jwt_required()
-@api_fonction(nom_fonction='get_settings_by_utilisateur', app_id=1, description='Récupérer les paramètres d\'un utilisateur', auto_register=True)
 @trace_action(action_type="SETTINGS", code_prefix="SET_USR")
 def get_settings_by_utilisateur(utilisateur_id):
     page = request.args.get('page', 1, type=int)
@@ -109,7 +108,7 @@ def get_settings_by_utilisateur(utilisateur_id):
 
 @settings_bp.route('/', methods=['POST'])
 @jwt_required()
-@api_fonction(nom_fonction='create_setting', app_id=1, description='Créer un nouveau paramètre', auto_register=True)
+#@api_fonction(nom_fonction='create_setting', app_id=1, description='Créer un nouveau paramètre', auto_register=True)
 @trace_action(action_type="SETTINGS", code_prefix="SET")
 @auto_set_user_fields()
 def create_setting():
@@ -139,7 +138,7 @@ def create_setting():
 
 @settings_bp.route('/<int:id>', methods=['PUT'])
 @jwt_required()
-@api_fonction(nom_fonction='update_setting', app_id=1, description='Mettre à jour un paramètre', auto_register=True)
+#@api_fonction(nom_fonction='update_setting', app_id=1, description='Mettre à jour un paramètre', auto_register=True)
 @trace_action(action_type="SETTINGS", code_prefix="SET")
 @auto_set_user_fields()
 def update_setting(id):
