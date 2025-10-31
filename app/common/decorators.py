@@ -50,6 +50,10 @@ def require_fonction_permission(nom_fonction, app_id=None):
                     }
                 }), 404
             
+            # Bypass contrôle pour les administrateurs
+            if getattr(utilisateur, 'profil', None) == 'Administrateur':
+                return f(*args, **kwargs)
+            
             # Utiliser l'app_id du décorateur s'il est fourni, sinon le récupérer depuis les paramètres
             check_app_id = app_id or kwargs.get('app_id') or request.args.get('app_id') or current_app.config.get('DEFAULT_APP_ID')
             
@@ -222,6 +226,10 @@ def api_fonction(nom_fonction=None, app_id=None, description=None, auto_register
                             'en': 'User not found'
                         }
                     }), 404
+                
+                # Bypass contrôle pour les administrateurs
+                if getattr(utilisateur, 'profil', None) == 'Administrateur':
+                    return f(*args, **kwargs)
                 
                 if not utilisateur.has_permission_for_fonction(check_app_id, func_name):
                     current_app.logger.error(f"Accès refusé à {func_name} de l'application {check_app_id} pour l'utilisateur {utilisateur.login}")
