@@ -227,3 +227,58 @@ def get_roles_with_permission(id):
             },
             'details': str(e)
         }), 500
+
+@permission_bp.route('/search', methods=['GET'])
+@jwt_required()
+@api_fonction(nom_fonction='search_permissions', app_id=1, description='Rechercher des permissions', auto_register=True)
+@trace_action(action_type="PERMISSION", code_prefix="PERM_SEARCH")
+def search_permissions():
+    """Rechercher des permissions par nom ou description"""
+    try:
+        query = request.args.get('q', '')
+        if not query or len(query) < 2:
+            return jsonify({
+                'error': True,
+                'message': {
+                    'en': 'Search query must be at least 2 characters',
+                    'fr': 'La requête de recherche doit comporter au moins 2 caractères'
+                }
+            }), 400
+
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        if per_page > 50:
+            per_page = 50
+
+        permissions_paginated = permissions_controller.search_permissions(query, page, per_page)
+
+        pagination_metadata = {
+            "page": page,
+            "per_page": per_page,
+            "total_items": permissions_paginated.total,
+            "total_pages": permissions_paginated.pages,
+            "has_next": permissions_paginated.has_next,
+            "has_prev": permissions_paginated.has_prev,
+            "next_page": permissions_paginated.next_num if permissions_paginated.has_next else None,
+            "prev_page": permissions_paginated.prev_num if permissions_paginated.has_prev else None
+        }
+
+        result = {
+            "error": False,
+            "message": {
+                "en": "Permissions found successfully",
+                "fr": "Permissions trouvées avec succès"
+            },
+            "data": permissions_schema.dump(permissions_paginated.items),
+            "pagination": pagination_metadata
+        }
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': 'Error while searching permissions',
+                'fr': 'Erreur lors de la recherche des permissions'
+            },
+            'details': str(e)
+        }), 500

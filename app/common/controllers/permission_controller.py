@@ -22,3 +22,6 @@ class PermissionController:
     
     def get_roles_with_permission(self, permission_id):
         return self.permission_service.get_roles_with_permission(permission_id) 
+
+    def search_permissions(self, query, page, per_page):
+        return self.permission_service.search_permissions(query, page, per_page)

@@ -1,4 +1,5 @@
 from app.common.models import Permission, db, RolePermission, Role
+from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
 class PermissionService:    
@@ -96,3 +97,13 @@ class PermissionService:
         except Exception as e:
             print(f"Error getting roles with permission: {str(e)}")
             raise
+
+    def search_permissions(self, query, page, per_page):
+        """Rechercher des permissions par nom ou description"""
+        search_query = f"%{query}%"
+        return Permission.query.filter(
+            or_(
+                Permission.nom.ilike(search_query),
+                Permission.description.ilike(search_query)
+            )
+        ).paginate(page=page, per_page=per_page, error_out=False)
