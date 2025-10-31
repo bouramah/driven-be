@@ -65,7 +65,7 @@ def get_objectifs():
 
 @objectif_bp.route('/users', methods=['GET'])
 @jwt_required()
-@api_fonction(nom_fonction='get_available_users', app_id=1, description='Récupérer les utilisateurs disponibles pour assignation d\'objectifs', auto_register=True)
+#@api_fonction(nom_fonction='get_available_users', app_id=1, description='Récupérer les utilisateurs disponibles pour assignation d\'objectifs', auto_register=True)
 @trace_action(action_type="OBJECTIF", code_prefix="OBJ_USERS")
 def get_available_users():
     # Récupérer l'utilisateur courant

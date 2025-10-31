@@ -49,3 +49,7 @@ class RoleController:
     def remove_permissions(self, role_id, permission_ids):
         """Retirer des permissions d'un rôle"""
         return self.role_service.remove_permissions(role_id, permission_ids)
+    
+    def search_roles(self, query, page, per_page):
+        """Rechercher des rôles par nom, description ou nom d'application"""
+        return self.role_service.search_roles(query, page, per_page)

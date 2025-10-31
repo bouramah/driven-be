@@ -23,7 +23,7 @@ def get_permissions():
     
     # Limiter per_page à un maximum de 50 pour éviter les requêtes trop lourdes
     if per_page > 50:
-        per_page = 50
+        per_page = 500
     
     # Récupérer les entrées paginées
     permissions_paginated = permissions_controller.get_permissions_paginated(page, per_page)

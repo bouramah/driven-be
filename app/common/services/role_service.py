@@ -1,5 +1,5 @@
 from app.common.models import Role, Permission, RolePermission, Application, db
-from sqlalchemy import and_
+from sqlalchemy import and_, or_
 from sqlalchemy.orm import joinedload
 
 class RoleService:    
@@ -188,3 +188,16 @@ class RoleService:
             print(f"Error removing permissions: {str(e)}")
             db.session.rollback()
             raise
+    
+    def search_roles(self, query, page, per_page):
+        """Rechercher des rôles par nom, description ou nom d'application"""
+        search_query = f"%{query}%"
+        return Role.query.options(
+            joinedload(Role.application)
+        ).join(Application).filter(
+            or_(
+                Role.nom.ilike(search_query),
+                Role.description.ilike(search_query),
+                Application.nom.ilike(search_query)
+            )
+        ).paginate(page=page, per_page=per_page, error_out=False)

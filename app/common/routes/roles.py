@@ -356,3 +356,64 @@ def assign_permission(role_id, permission_id):
             },
             'details': str(e)
         }), 500
+
+@role_bp.route('/search', methods=['GET'])
+@jwt_required()
+@api_fonction(nom_fonction='search_roles', app_id=1, description='Rechercher des rôles', auto_register=True)
+@trace_action(action_type="ROLE", code_prefix="ROLE_SEARCH")
+def search_roles():
+    """Rechercher des rôles par nom, description ou nom d'application"""
+    try:
+        # Récupérer les paramètres de recherche
+        query = request.args.get('q', '')
+        if not query or len(query) < 2:
+            return jsonify({
+                'error': True,
+                'message': {
+                    'en': 'Search query must be at least 2 characters',
+                    'fr': 'La requête de recherche doit comporter au moins 2 caractères'
+                }
+            }), 400
+        
+        # Récupérer les paramètres de pagination
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        
+        # Limiter per_page à un maximum de 50
+        if per_page > 50:
+            per_page = 50
+        
+        # Effectuer la recherche
+        roles_paginated = roles_controller.search_roles(query, page, per_page)
+        
+        # Préparer les métadonnées de pagination
+        pagination_metadata = {
+            "page": page,
+            "per_page": per_page,
+            "total_items": roles_paginated.total,
+            "total_pages": roles_paginated.pages,
+            "has_next": roles_paginated.has_next,
+            "has_prev": roles_paginated.has_prev,
+            "next_page": roles_paginated.next_num if roles_paginated.has_next else None,
+            "prev_page": roles_paginated.prev_num if roles_paginated.has_prev else None
+        }
+        
+        result = {
+            "error": False,
+            "message": {
+                "en": "Roles found successfully",
+                "fr": "Rôles trouvés avec succès"
+            },
+            "data": roles_schema.dump(roles_paginated.items),
+            "pagination": pagination_metadata
+        }
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': {
+                'en': 'Error while searching roles',
+                'fr': 'Erreur lors de la recherche des rôles'
+            },
+            'details': str(e)
+        }), 500
